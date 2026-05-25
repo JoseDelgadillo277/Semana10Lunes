@@ -1,0 +1,128 @@
+[
+  {
+    "codigo": "EVT-001",
+    "producto": "Buffet peruano para eventos",
+    "categoria": "Buffets",
+    "descripcion": "Servicio de platos peruanos variados para matrimonios, reuniones familiares, aniversarios y eventos corporativos.",
+    "tipo": "paquete",
+    "precio": 850,
+    "imagen": "https://drive.google.com/file/d/1UossJuvUHB6cs6SOFLOTp4P51d8s6wjr/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-002",
+    "producto": "Cena para matrimonio",
+    "categoria": "Matrimonios",
+    "descripcion": "Cena formal con entrada, fondo, bebida y postre para recepciones de boda.",
+    "tipo": "servicio",
+    "precio": 1450,
+    "imagen": "https://drive.google.com/file/d/1LSGGSla_cv00rIwaAaJicVDehxl7NLch/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-003",
+    "producto": "Coffee break empresarial",
+    "categoria": "Corporativo",
+    "descripcion": "Bebidas calientes, jugos, bocaditos y dulces para reuniones o capacitaciones.",
+    "tipo": "servicio",
+    "precio": 420,
+    "imagen": "https://drive.google.com/file/d/1Xs0RrzOfvKy-gfpd-G5T0ER3GhZ2VHFD/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-004",
+    "producto": "Mesa de bocaditos salados",
+    "categoria": "Bocaditos",
+    "descripcion": "Mini sandwiches, empanaditas, tequenos y piqueos para recepciones sociales.",
+    "tipo": "mesa",
+    "precio": 360,
+    "imagen": "https://drive.google.com/file/d/1HJ4gSckD0XeuZAosEqlQvq_DPRtpaFcU/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-005",
+    "producto": "Mesa de bocaditos dulces",
+    "categoria": "Bocaditos",
+    "descripcion": "Trufas, alfajores, cupcakes, mini tartas y dulces decorativos para eventos.",
+    "tipo": "mesa",
+    "precio": 390,
+    "imagen": "https://drive.google.com/file/d/1Xs0RrzOfvKy-gfpd-G5T0ER3GhZ2VHFD/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-006",
+    "producto": "Pack de bebidas para fiesta",
+    "categoria": "Bebidas",
+    "descripcion": "Agua, gaseosas, jugos y hielo para matrimonios, graduaciones y cumpleanos.",
+    "tipo": "pack",
+    "precio": 260,
+    "imagen": "https://drive.google.com/file/d/14SRka_aQ5gR_NdEObnxjCwA_ocDZhF7x/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-007",
+    "producto": "Mesa de postres decorada",
+    "categoria": "Postres",
+    "descripcion": "Postres individuales con presentacion para mesa principal o zona dulce.",
+    "tipo": "mesa",
+    "precio": 520,
+    "imagen": "https://drive.google.com/file/d/1efCt1IUaTna_lMm-c10qoj3ubz_DvEGA/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-008",
+    "producto": "Menu para graduacion",
+    "categoria": "Graduaciones",
+    "descripcion": "Menu completo para celebraciones de promocion, egresados y ceremonias.",
+    "tipo": "paquete",
+    "precio": 780,
+    "imagen": "https://drive.google.com/file/d/1x6PFtuIjWn2TQhp4YUVRpMrGndLAWh4Q/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-009",
+    "producto": "Menu infantil para eventos",
+    "categoria": "Infantil",
+    "descripcion": "Mini hamburguesas, nuggets, papas, jugos y dulces para eventos infantiles.",
+    "tipo": "paquete",
+    "precio": 460,
+    "imagen": "https://drive.google.com/file/d/17eF-RHUGcC4EvSBJi9i8azYxFiNpMd6R/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-010",
+    "producto": "Box lunch ejecutivo",
+    "categoria": "Corporativo",
+    "descripcion": "Caja individual con sandwich, fruta, bebida y snack para reuniones o viajes.",
+    "tipo": "unidad",
+    "precio": 18,
+    "imagen": "https://drive.google.com/file/d/11EweYGHjaoEnqaQ9VCiSh-traCBMXTO3/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-011",
+    "producto": "Servicio de mozos",
+    "categoria": "Personal",
+    "descripcion": "Personal de atencion para servicio en mesa, buffet, bebidas y recepcion.",
+    "tipo": "servicio",
+    "precio": 180,
+    "imagen": "https://drive.google.com/file/d/1zGNBtxB7XVsb_3P7U1Tn2ADOfgCMw9ij/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-012",
+    "producto": "Alquiler de utensilios",
+    "categoria": "Implementos",
+    "descripcion": "Utensilios, platos, vasos, cubiertos y copas para recepciones formales o buffet.",
+    "tipo": "pack",
+    "precio": 220,
+    "imagen": "https://drive.google.com/file/d/1845Cnnx_hJnYJroPTi68nwx2GQD3GI_B/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-013",
+    "producto": "Decoracion basica de mesa",
+    "categoria": "Decoracion",
+    "descripcion": "Manteleria, centros de mesa y montaje basico para eventos sociales.",
+    "tipo": "servicio",
+    "precio": 300,
+    "imagen": "https://drive.google.com/file/d/1-NMg-ouXV2qsXkeWkBL81sIVWrbwNdTS/view?usp=sharing"
+  },
+  {
+    "codigo": "EVT-014",
+    "producto": "Parrilla para evento social",
+    "categoria": "Buffets",
+    "descripcion": "Estacion de parrilla con carnes, guarniciones, salsas y servicio de atencion.",
+    "tipo": "paquete",
+    "precio": 1100,
+    "imagen": "https://drive.google.com/file/d/1-9nnu0QRl0zixt6f0EWOuZCO72m_75cO/view?usp=sharing"
+  }
+]

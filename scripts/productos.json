@@ -10,7 +10,7 @@
     "ubicacion": "Congeladora 1",
     "proveedor": "Avícola San Pedro",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/raw-chicken?lock=101"
+    "imagen": "https://drive.google.com/file/d/1k7RYsxEPHaHPEow-k_v2gn81V-VP8JSD/view?usp=sharing"
   },
   {
     "codigo": "ALI-002",
@@ -23,7 +23,7 @@
     "ubicacion": "Congeladora 1",
     "proveedor": "Carnes del Sur",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/raw-beef?lock=102"
+    "imagen": "https://drive.google.com/file/d/1XVS5MrA0RcIvZ4n2GjibK3zgYch-Rzs5/view?usp=sharing"
   },
   {
     "codigo": "ALI-003",
@@ -36,7 +36,7 @@
     "ubicacion": "Congeladora 2",
     "proveedor": "Distribuidora Cárnica Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/raw-pork?lock=103"
+    "imagen": "https://drive.google.com/file/d/1E6es-IzzDJJtL-ggP8YYv3pdF_iCpdzQ/view?usp=sharing"
   },
   {
     "codigo": "ALI-004",
@@ -49,33 +49,33 @@
     "ubicacion": "Congeladora 2",
     "proveedor": "Pesquera Norte",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/fish-fillet?lock=104"
+    "imagen": "https://drive.google.com/file/d/1aNjCp1dNcrPPXml8Q9D4x0WBGGGVtvlS/view?usp=sharing"
   },
   {
     "codigo": "ALI-005",
     "producto": "Huevos",
     "categoria": "Carnes y proteínas",
     "descripcion": "Producto básico para cocina, repostería, salsas y desayunos.",
-    "unidad": "bandeja",
+    "unidad": "bandejas",
     "stockActual": 18,
     "stockMinimo": 8,
     "ubicacion": "Refrigeradora 1",
     "proveedor": "Granja La Campiña",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/eggs?lock=105"
+    "imagen": "https://drive.google.com/file/d/1w2gx6UK_rb5kVLyFEQxa47QYYiO-o6K8/view?usp=sharing"
   },
   {
     "codigo": "LAC-001",
     "producto": "Leche evaporada",
     "categoria": "Lácteos",
     "descripcion": "Insumo para cremas, salsas, postres y bebidas calientes.",
-    "unidad": "lata",
+    "unidad": "latas",
     "stockActual": 90,
     "stockMinimo": 30,
     "ubicacion": "Estante B1",
     "proveedor": "Lácteos Andinos",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/evaporated-milk?lock=106"
+    "imagen": "https://drive.google.com/file/d/13lhXUW58zus564yyPVCtbJtZ1t1WpEJn/view?usp=sharing"
   },
   {
     "codigo": "LAC-002",
@@ -88,7 +88,7 @@
     "ubicacion": "Refrigeradora 1",
     "proveedor": "Lácteos del Sur",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/fresh-cheese?lock=107"
+    "imagen": "https://drive.google.com/file/d/1PcV-JVq_35RSwEz--5Y42v3QZzlL5BFD/view?usp=sharing"
   },
   {
     "codigo": "LAC-003",
@@ -101,7 +101,7 @@
     "ubicacion": "Refrigeradora 1",
     "proveedor": "Lácteos del Sur",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/mozzarella-cheese?lock=108"
+    "imagen": "https://drive.google.com/file/d/1qdIilSElG0sb9V3z3nrSxQTX2vtv9-SW/view?usp=sharing"
   },
   {
     "codigo": "LAC-004",
@@ -114,33 +114,33 @@
     "ubicacion": "Refrigeradora 2",
     "proveedor": "Distribuidora Alimentaria Lima",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/butter-block?lock=109"
+    "imagen": "https://drive.google.com/file/d/1IVASzMR7sZdFNeicxtoQ9UQNWGQzUY0v/view?usp=sharing"
   },
   {
     "codigo": "LAC-005",
     "producto": "Crema de leche",
     "categoria": "Lácteos",
     "descripcion": "Base para salsas, sopas cremosas, postres y pastelería.",
-    "unidad": "litro",
+    "unidad": "litros",
     "stockActual": 24,
     "stockMinimo": 10,
     "ubicacion": "Refrigeradora 2",
     "proveedor": "Lácteos Andinos",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/cream-carton?lock=110"
+    "imagen": "https://drive.google.com/file/d/1EPaE9WsmrmRx4KyOpsnRy81aEdbJLUbU/view?usp=sharing"
   },
   {
     "codigo": "VER-001",
     "producto": "Lechuga",
     "categoria": "Verduras y hortalizas",
     "descripcion": "Hortaliza fresca para ensaladas, decoración y platos fríos.",
-    "unidad": "unidad",
+    "unidad": "unidades",
     "stockActual": 40,
     "stockMinimo": 15,
     "ubicacion": "Cámara fría A",
     "proveedor": "Mercado Mayorista",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/lettuce?lock=111"
+    "imagen": "https://drive.google.com/file/d/1rOK8RLOZZAVR5OigFboR77VYDsiYXqEV/view?usp=sharing"
   },
   {
     "codigo": "VER-002",
@@ -153,7 +153,7 @@
     "ubicacion": "Cámara fría A",
     "proveedor": "Mercado Mayorista",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/tomato?lock=112"
+    "imagen": "https://drive.google.com/file/d/12g9XClUakbIzhAFObBhaPMCzOVSexEfz/view?usp=sharing"
   },
   {
     "codigo": "VER-003",
@@ -166,7 +166,7 @@
     "ubicacion": "Estante A1",
     "proveedor": "Mercado Mayorista",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/red-onion?lock=113"
+    "imagen": "https://drive.google.com/file/d/1TEd9X5jGDAqu3_1XauPjQznrv_BShegx/view?usp=sharing"
   },
   {
     "codigo": "VER-004",
@@ -179,7 +179,7 @@
     "ubicacion": "Cámara fría A",
     "proveedor": "Mercado Mayorista",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/carrot?lock=114"
+    "imagen": "https://drive.google.com/file/d/12alPGKZqR3qavs3h1Co-R_gV0pW3DwCR/view?usp=sharing"
   },
   {
     "codigo": "VER-005",
@@ -192,7 +192,7 @@
     "ubicacion": "Estante A2",
     "proveedor": "Agrícola Santa Rosa",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/potato?lock=115"
+    "imagen": "https://drive.google.com/file/d/1O_xhN2AheywY8GUZ-nByLdyRz4P2_EoI/view?usp=sharing"
   },
   {
     "codigo": "VER-006",
@@ -205,7 +205,7 @@
     "ubicacion": "Cámara fría A",
     "proveedor": "Mercado Mayorista",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/bell-pepper?lock=116"
+    "imagen": "https://drive.google.com/file/d/1jz1jDH9ivLktVQt-jfkSrC0M2SRKLZmC/view?usp=sharing"
   },
   {
     "codigo": "FRU-001",
@@ -218,7 +218,7 @@
     "ubicacion": "Cámara fría B",
     "proveedor": "Frutera Central",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/lemon?lock=117"
+    "imagen": "https://drive.google.com/file/d/1oXXSxjpc53ds9Jfm2ilOnSqbfOujoX4e/view?usp=sharing"
   },
   {
     "codigo": "FRU-002",
@@ -231,20 +231,20 @@
     "ubicacion": "Cámara fría B",
     "proveedor": "Frutera Central",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/apple?lock=118"
+    "imagen": "https://drive.google.com/file/d/186xzcrMd8QGZ4CA1pXcizpFbGsI48qFU/view?usp=sharing"
   },
   {
     "codigo": "FRU-003",
     "producto": "Piña",
     "categoria": "Frutas",
     "descripcion": "Fruta tropical para jugos, postres, brochetas y ensaladas.",
-    "unidad": "unidad",
+    "unidad": "unidades",
     "stockActual": 18,
     "stockMinimo": 6,
     "ubicacion": "Cámara fría B",
     "proveedor": "Frutera Central",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/pineapple?lock=119"
+    "imagen": "https://drive.google.com/file/d/1sPLYBCRtc-U7X36ilz2ZO_5mJ54Ajank/view?usp=sharing"
   },
   {
     "codigo": "FRU-004",
@@ -257,7 +257,7 @@
     "ubicacion": "Refrigeradora 3",
     "proveedor": "Frutera Central",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/strawberry?lock=120"
+    "imagen": "https://drive.google.com/file/d/1anZgvcbzlKrW5fq4xBeEDLNcW7v171B9/view?usp=sharing"
   },
   {
     "codigo": "ABA-001",
@@ -270,20 +270,20 @@
     "ubicacion": "Estante C1",
     "proveedor": "Distribuidora Lima SAC",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/sliced-bread?lock=121"
+    "imagen": "https://drive.google.com/file/d/10ZlQUYANG3fCL1QED-TP-xewxOKKQ2PP/view?usp=sharing"
   },
   {
     "codigo": "ABA-002",
     "producto": "Fideos",
     "categoria": "Granos y abarrotes",
     "descripcion": "Pasta seca para platos principales, sopas y menús variados.",
-    "unidad": "kg",
+    "unidad": "paquetes",
     "stockActual": 80,
     "stockMinimo": 30,
     "ubicacion": "Estante C1",
     "proveedor": "Distribuidora Lima SAC",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/dry-pasta?lock=122"
+    "imagen": "https://drive.google.com/file/d/1K93bxDzbr34gQOpgS5X7KXIDBHLMs6oJ/view?usp=sharing"
   },
   {
     "codigo": "ABA-003",
@@ -296,7 +296,7 @@
     "ubicacion": "Estante C2",
     "proveedor": "Molinos del Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/wheat-flour?lock=123"
+    "imagen": "https://drive.google.com/file/d/1uRTaUODPDjJUoQtQVn673pGiox0bO4vm/view?usp=sharing"
   },
   {
     "codigo": "ABA-004",
@@ -309,7 +309,7 @@
     "ubicacion": "Estante C2",
     "proveedor": "Distribuidora Lima SAC",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/white-sugar?lock=124"
+    "imagen": "https://drive.google.com/file/d/1jUYwFcS42LaSZ6bQ-DI2EpTixtUFs09f/view?usp=sharing"
   },
   {
     "codigo": "ABA-005",
@@ -322,7 +322,7 @@
     "ubicacion": "Estante C3",
     "proveedor": "Distribuidora Lima SAC",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/table-salt?lock=125"
+    "imagen": "https://drive.google.com/file/d/18kYmYno3eAtvP-7Ay-DurKZFfW1a-w5N/view?usp=sharing"
   },
   {
     "codigo": "ABA-006",
@@ -335,46 +335,46 @@
     "ubicacion": "Estante C3",
     "proveedor": "Distribuidora Lima SAC",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/lentils?lock=126"
+    "imagen": "https://drive.google.com/file/d/1yEDkRJNw0olN8DCfPegJR63qFmrszi-x/view?usp=sharing"
   },
   {
     "codigo": "CON-001",
     "producto": "Aceite vegetal",
     "categoria": "Aceites y condimentos",
     "descripcion": "Aceite de uso general para frituras, aderezos y salteados.",
-    "unidad": "litro",
+    "unidad": "litros",
     "stockActual": 80,
     "stockMinimo": 30,
     "ubicacion": "Estante D1",
     "proveedor": "Aceites Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/cooking-oil-bottle?lock=127"
+    "imagen": "https://drive.google.com/file/d/1xgFbe--uQLR5jhm0q6rARoIpL4adGWzy/view?usp=sharing"
   },
   {
     "codigo": "CON-002",
     "producto": "Vinagre blanco",
     "categoria": "Aceites y condimentos",
     "descripcion": "Insumo para ensaladas, encurtidos, marinados y limpieza alimentaria.",
-    "unidad": "litro",
+    "unidad": "litros",
     "stockActual": 25,
     "stockMinimo": 10,
     "ubicacion": "Estante D1",
     "proveedor": "Distribuidora Alimentaria Lima",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/vinegar-bottle?lock=128"
+    "imagen": "https://drive.google.com/file/d/14yyso2hjq5Zz_myRLcUwqdq4IGTaJm1p/view?usp=sharing"
   },
   {
     "codigo": "CON-003",
     "producto": "Sillao",
     "categoria": "Aceites y condimentos",
     "descripcion": "Salsa para marinados, salteados orientales y platos criollos fusión.",
-    "unidad": "litro",
+    "unidad": "litros",
     "stockActual": 20,
     "stockMinimo": 8,
     "ubicacion": "Estante D2",
     "proveedor": "Distribuidora Oriental",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/soy-sauce-bottle?lock=129"
+    "imagen": "https://drive.google.com/file/d/1liEURIXhiZ_72TP5zN0fDQUzOKmLCa7j/view?usp=sharing"
   },
   {
     "codigo": "CON-004",
@@ -387,7 +387,7 @@
     "ubicacion": "Estante D2",
     "proveedor": "Alimentos La Preferida",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/mayonnaise-jar?lock=130"
+    "imagen": "https://drive.google.com/file/d/1YQAQps925aoYJBe8bNd-zu3Rbgs9aCqd/view?usp=sharing"
   },
   {
     "codigo": "CON-005",
@@ -400,123 +400,97 @@
     "ubicacion": "Estante D3",
     "proveedor": "Sazonadores Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/dried-chili?lock=131"
+    "imagen": "https://drive.google.com/file/d/1afVfiRhUODd3uwzjWdker4j5J0XN9a18/view?usp=sharing"
   },
   {
     "codigo": "BEB-001",
     "producto": "Agua mineral",
     "categoria": "Bebidas",
     "descripcion": "Bebida básica para eventos, reuniones y servicio en mesa.",
-    "unidad": "botella",
+    "unidad": "botellas",
     "stockActual": 240,
     "stockMinimo": 80,
     "ubicacion": "Almacén bebidas",
     "proveedor": "Bebidas Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/water-bottle?lock=132"
+    "imagen": "https://drive.google.com/file/d/1aOg7gARL1A6K9knm0nQnzaWM4pHLyUYI/view?usp=sharing"
   },
   {
     "codigo": "BEB-002",
     "producto": "Gaseosa personal",
     "categoria": "Bebidas",
     "descripcion": "Bebida embotellada para eventos, almuerzos y paquetes corporativos.",
-    "unidad": "unidad",
+    "unidad": "botellas",
     "stockActual": 180,
     "stockMinimo": 60,
     "ubicacion": "Almacén bebidas",
     "proveedor": "Bebidas Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/soda-bottle?lock=133"
+    "imagen": "https://drive.google.com/file/d/1Cay0U1scsNURmEvUvn4FoY2yaQvVGZHO/view?usp=sharing"
   },
   {
     "codigo": "BEB-003",
     "producto": "Jugo en caja",
     "categoria": "Bebidas",
     "descripcion": "Bebida lista para coffee breaks, eventos infantiles y almuerzos.",
-    "unidad": "unidad",
+    "unidad": "cajas",
     "stockActual": 120,
     "stockMinimo": 40,
     "ubicacion": "Almacén bebidas",
     "proveedor": "Bebidas Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/juice-box?lock=134"
+    "imagen": "https://drive.google.com/file/d/1aR3KIY1uL0C95dq6SnFdD-5-8ZIKroMP/view?usp=sharing"
   },
   {
     "codigo": "BEB-004",
     "producto": "Café instantáneo",
     "categoria": "Bebidas",
     "descripcion": "Producto para estaciones de café, desayunos y coffee breaks.",
-    "unidad": "frasco",
+    "unidad": "frascos",
     "stockActual": 25,
     "stockMinimo": 8,
     "ubicacion": "Estante E1",
     "proveedor": "Distribuidora Café Perú",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/instant-coffee-jar?lock=135"
-  },
-  {
-    "codigo": "CONG-001",
-    "producto": "Papas prefritas congeladas",
-    "categoria": "Congelados",
-    "descripcion": "Guarnición rápida para platos principales, snacks y eventos informales.",
-    "unidad": "kg",
-    "stockActual": 55,
-    "stockMinimo": 20,
-    "ubicacion": "Congeladora 3",
-    "proveedor": "Congelados del Perú",
-    "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/frozen-french-fries?lock=136"
-  },
-  {
-    "codigo": "CONG-002",
-    "producto": "Verduras congeladas",
-    "categoria": "Congelados",
-    "descripcion": "Mezcla de vegetales para guarniciones, sopas y salteados.",
-    "unidad": "kg",
-    "stockActual": 30,
-    "stockMinimo": 12,
-    "ubicacion": "Congeladora 3",
-    "proveedor": "Congelados del Perú",
-    "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/frozen-vegetables?lock=137"
+    "imagen": "https://drive.google.com/file/d/1WXhpBb7I_fZnoteBMiKqkDy4IeAmp6mx/view?usp=sharing"
   },
   {
     "codigo": "DES-001",
     "producto": "Platos descartables",
     "categoria": "Descartables",
     "descripcion": "Material para servicio de comidas en eventos y delivery.",
-    "unidad": "paquete",
+    "unidad": "paquetes",
     "stockActual": 70,
     "stockMinimo": 25,
     "ubicacion": "Estante F1",
     "proveedor": "Descartables Lima",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/disposable-plates?lock=138"
+    "imagen": "https://drive.google.com/file/d/1Yhhd5pQS159zgHMqynyJ3NPadeE1L2-U/view?usp=sharing"
   },
   {
     "codigo": "DES-002",
     "producto": "Vasos descartables",
     "categoria": "Descartables",
     "descripcion": "Material para bebidas frías, jugos, agua y gaseosas.",
-    "unidad": "paquete",
+    "unidad": "paquetes",
     "stockActual": 85,
     "stockMinimo": 30,
     "ubicacion": "Estante F1",
     "proveedor": "Descartables Lima",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/plastic-cups?lock=139"
+    "imagen": "https://drive.google.com/file/d/10JClOjjS59CIP2IEwearoe1TlCwjRclH/view?usp=sharing"
   },
   {
     "codigo": "LIM-001",
     "producto": "Detergente lavavajilla",
     "categoria": "Limpieza e higiene",
     "descripcion": "Producto de limpieza para lavado de utensilios, ollas y vajilla.",
-    "unidad": "litro",
+    "unidad": "litros",
     "stockActual": 30,
     "stockMinimo": 10,
     "ubicacion": "Área limpieza",
     "proveedor": "Limpieza Total SAC",
     "estado": "Suficiente",
-    "imagen": "https://loremflickr.com/300/300/dish-soap-bottle?lock=140"
+    "imagen": "https://drive.google.com/file/d/1t-3nuC05Nz8ipcSAHSpNVGMbptbAnziq/view?usp=sharing"
   }
 ]

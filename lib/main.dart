@@ -108,8 +108,12 @@ class InicioScreen extends StatelessWidget {
               const SizedBox(height: 12),
               OutlinedButton.icon(
                 onPressed:
-                    () =>
-                        abrirPantalla(context, const ProductosEventosScreen()),
+                    () => abrirPantalla(
+                      context,
+                      ProductosEventosScreen(
+                        firebaseDisponible: firebaseDisponible,
+                      ),
+                    ),
                 icon: const Icon(Icons.celebration),
                 label: const Text('Productos para eventos'),
                 style: OutlinedButton.styleFrom(
@@ -356,8 +360,6 @@ class _InventarioScreenState extends State<InventarioScreen>
     'BEB-002': 3.20,
     'BEB-003': 2.50,
     'BEB-004': 16.00,
-    'CONG-001': 10.50,
-    'CONG-002': 9.50,
     'DES-001': 12.00,
     'DES-002': 10.00,
     'LIM-001': 11.50,
@@ -550,6 +552,9 @@ class _InventarioScreenState extends State<InventarioScreen>
     if (texto.contains('descartable')) {
       return Icons.flatware;
     }
+    if (texto.contains('implemento') || texto.contains('servicio')) {
+      return Icons.room_service;
+    }
     if (texto.contains('limpieza')) {
       return Icons.cleaning_services;
     }
@@ -572,6 +577,9 @@ class _InventarioScreenState extends State<InventarioScreen>
     if (texto.contains('bebida')) {
       return const Color(0xFF3D6F99);
     }
+    if (texto.contains('abarrote') || texto.contains('grano')) {
+      return const Color(0xFF9A6A2D);
+    }
     if (texto.contains('panader') || texto.contains('base')) {
       return const Color(0xFF9A6A2D);
     }
@@ -580,6 +588,9 @@ class _InventarioScreenState extends State<InventarioScreen>
     }
     if (texto.contains('descartable')) {
       return const Color(0xFF6A6A6A);
+    }
+    if (texto.contains('implemento') || texto.contains('servicio')) {
+      return const Color(0xFF7A5B2E);
     }
     if (texto.contains('limpieza')) {
       return const Color(0xFF3E7C70);
@@ -630,7 +641,33 @@ class _InventarioScreenState extends State<InventarioScreen>
   }
 
   String obtenerImagenProducto(String codigo, String urlImagen) {
-    return urlImagen;
+    final url = urlImagen.trim();
+
+    if (url.isEmpty) {
+      return '';
+    }
+
+    final uri = Uri.tryParse(url);
+
+    if (uri == null || !uri.host.contains('drive.google.com')) {
+      return url;
+    }
+
+    final idPorQuery = uri.queryParameters['id'];
+
+    if (idPorQuery != null && idPorQuery.isNotEmpty) {
+      return 'https://drive.google.com/thumbnail?id=$idPorQuery&sz=w1000';
+    }
+
+    final segmentos = uri.pathSegments;
+    final indiceFile = segmentos.indexOf('d');
+
+    if (indiceFile >= 0 && indiceFile + 1 < segmentos.length) {
+      final idArchivo = segmentos[indiceFile + 1];
+      return 'https://drive.google.com/thumbnail?id=$idArchivo&sz=w1000';
+    }
+
+    return url;
   }
 
   Widget construirChipEstado(String estado) {
@@ -931,7 +968,9 @@ class _InventarioScreenState extends State<InventarioScreen>
 }
 
 class ProductosEventosScreen extends StatefulWidget {
-  const ProductosEventosScreen({super.key});
+  const ProductosEventosScreen({super.key, required this.firebaseDisponible});
+
+  final bool firebaseDisponible;
 
   @override
   State<ProductosEventosScreen> createState() => _ProductosEventosScreenState();
@@ -943,146 +982,125 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
   final Map<String, int> carrito = {};
   late final AnimationController controladorAnimacionCarrito;
   late final Animation<double> animacionCarrito;
+  List<Map<String, dynamic>> productosEventos = [];
+  bool cargando = true;
+  String? mensajeError;
 
-  static const List<Map<String, dynamic>> productosEventos = [
+  static const List<Map<String, dynamic>> productosEventosBase = [
     {
       'codigo': 'EVT-001',
-      'producto': 'Buffet criollo para eventos',
+      'producto': 'Buffet peruano para eventos',
       'categoria': 'Buffets',
-      'descripcion':
-          'Servicio de comida criolla para matrimonios, reuniones familiares y celebraciones.',
-      'unidad': 'paquete',
+      'descripcion': 'Servicio de platos peruanos variados para matrimonios, reuniones familiares, aniversarios y eventos corporativos.',
+      'tipo': 'paquete',
     },
     {
       'codigo': 'EVT-002',
-      'producto': 'Buffet marino premium',
-      'categoria': 'Buffets',
-      'descripcion':
-          'Propuesta marina para recepciones, almuerzos especiales y eventos corporativos.',
-      'unidad': 'paquete',
+      'producto': 'Cena para matrimonio',
+      'categoria': 'Matrimonios',
+      'descripcion': 'Cena formal con entrada, fondo, bebida y postre para recepciones de boda.',
+      'tipo': 'servicio',
     },
     {
       'codigo': 'EVT-003',
-      'producto': 'Cena para matrimonio',
-      'categoria': 'Matrimonios',
-      'descripcion':
-          'Cena formal con entrada, fondo, bebida y postre para recepciones de boda.',
-      'unidad': 'servicio',
+      'producto': 'Coffee break empresarial',
+      'categoria': 'Corporativo',
+      'descripcion': 'Bebidas calientes, jugos, bocaditos y dulces para reuniones o capacitaciones.',
+      'tipo': 'servicio',
     },
     {
       'codigo': 'EVT-004',
-      'producto': 'Coffee break empresarial',
-      'categoria': 'Corporativo',
-      'descripcion':
-          'Bebidas calientes, jugos, bocaditos y dulces para reuniones o capacitaciones.',
-      'unidad': 'servicio',
+      'producto': 'Mesa de bocaditos salados',
+      'categoria': 'Bocaditos',
+      'descripcion': 'Mini sandwiches, empanaditas, tequenos y piqueos para recepciones sociales.',
+      'tipo': 'mesa',
     },
     {
       'codigo': 'EVT-005',
-      'producto': 'Mesa de bocaditos salados',
+      'producto': 'Mesa de bocaditos dulces',
       'categoria': 'Bocaditos',
-      'descripcion':
-          'Mini sandwiches, empanaditas, tequeños y piqueos para recepciones sociales.',
-      'unidad': 'mesa',
+      'descripcion': 'Trufas, alfajores, cupcakes, mini tartas y dulces decorativos para eventos.',
+      'tipo': 'mesa',
     },
     {
       'codigo': 'EVT-006',
-      'producto': 'Mesa de bocaditos dulces',
-      'categoria': 'Bocaditos',
-      'descripcion':
-          'Trufas, alfajores, cupcakes, mini tartas y dulces decorativos para eventos.',
-      'unidad': 'mesa',
+      'producto': 'Pack de bebidas para fiesta',
+      'categoria': 'Bebidas',
+      'descripcion': 'Agua, gaseosas, jugos y hielo para matrimonios, graduaciones y cumpleanos.',
+      'tipo': 'pack',
     },
     {
       'codigo': 'EVT-007',
-      'producto': 'Pack de bebidas para fiesta',
-      'categoria': 'Bebidas',
-      'descripcion':
-          'Agua, gaseosas, jugos y hielo para matrimonios, graduaciones y cumpleaños.',
-      'unidad': 'pack',
+      'producto': 'Mesa de postres decorada',
+      'categoria': 'Postres',
+      'descripcion': 'Postres individuales con presentacion para mesa principal o zona dulce.',
+      'tipo': 'mesa',
     },
     {
       'codigo': 'EVT-008',
-      'producto': 'Mesa de postres decorada',
-      'categoria': 'Postres',
-      'descripcion':
-          'Postres individuales con presentacion para mesa principal o zona dulce.',
-      'unidad': 'mesa',
+      'producto': 'Menu para graduacion',
+      'categoria': 'Graduaciones',
+      'descripcion': 'Menu completo para celebraciones de promocion, egresados y ceremonias.',
+      'tipo': 'paquete',
     },
     {
       'codigo': 'EVT-009',
-      'producto': 'Menú para graduación',
-      'categoria': 'Graduaciones',
-      'descripcion':
-          'Menu completo para celebraciones de promocion, egresados y ceremonias.',
-      'unidad': 'paquete',
+      'producto': 'Menu infantil para eventos',
+      'categoria': 'Infantil',
+      'descripcion': 'Mini hamburguesas, nuggets, papas, jugos y dulces para eventos infantiles.',
+      'tipo': 'paquete',
     },
     {
       'codigo': 'EVT-010',
-      'producto': 'Menú infantil para eventos',
-      'categoria': 'Infantil',
-      'descripcion':
-          'Mini hamburguesas, nuggets, papas, jugos y dulces para eventos infantiles.',
-      'unidad': 'paquete',
+      'producto': 'Box lunch ejecutivo',
+      'categoria': 'Corporativo',
+      'descripcion': 'Caja individual con sandwich, fruta, bebida y snack para reuniones o viajes.',
+      'tipo': 'unidad',
     },
     {
       'codigo': 'EVT-011',
-      'producto': 'Box lunch ejecutivo',
-      'categoria': 'Corporativo',
-      'descripcion':
-          'Caja individual con sandwich, fruta, bebida y snack para reuniones o viajes.',
-      'unidad': 'unidad',
+      'producto': 'Servicio de mozos',
+      'categoria': 'Personal',
+      'descripcion': 'Personal de atencion para servicio en mesa, buffet, bebidas y recepcion.',
+      'tipo': 'servicio',
     },
     {
       'codigo': 'EVT-012',
-      'producto': 'Servicio de mozos',
-      'categoria': 'Personal',
-      'descripcion':
-          'Personal de atencion para servicio en mesa, buffet, bebidas y recepcion.',
-      'unidad': 'servicio',
+      'producto': 'Alquiler de utensilios',
+      'categoria': 'Implementos',
+      'descripcion': 'Utensilios, platos, vasos, cubiertos y copas para recepciones formales o buffet.',
+      'tipo': 'pack',
     },
     {
       'codigo': 'EVT-013',
-      'producto': 'Alquiler de vajilla',
-      'categoria': 'Implementos',
-      'descripcion':
-          'Platos, vasos, cubiertos y copas para recepciones formales o buffet.',
-      'unidad': 'pack',
+      'producto': 'Decoracion basica de mesa',
+      'categoria': 'Decoracion',
+      'descripcion': 'Manteleria, centros de mesa y montaje basico para eventos sociales.',
+      'tipo': 'servicio',
     },
     {
       'codigo': 'EVT-014',
-      'producto': 'Decoración básica de mesa',
-      'categoria': 'Decoración',
-      'descripcion':
-          'Manteleria, centros de mesa y montaje basico para eventos sociales.',
-      'unidad': 'servicio',
-    },
-    {
-      'codigo': 'EVT-015',
       'producto': 'Parrilla para evento social',
       'categoria': 'Buffets',
-      'descripcion':
-          'Estacion de parrilla con carnes, guarniciones, salsas y servicio de atencion.',
-      'unidad': 'paquete',
+      'descripcion': 'Estacion de parrilla con carnes, guarniciones, salsas y servicio de atencion.',
+      'tipo': 'paquete',
     },
   ];
-
   static const Map<String, double> preciosEventos = {
     'EVT-001': 850.00,
-    'EVT-002': 980.00,
-    'EVT-003': 1450.00,
-    'EVT-004': 420.00,
-    'EVT-005': 360.00,
-    'EVT-006': 390.00,
-    'EVT-007': 260.00,
-    'EVT-008': 520.00,
-    'EVT-009': 780.00,
-    'EVT-010': 460.00,
-    'EVT-011': 18.00,
-    'EVT-012': 180.00,
-    'EVT-013': 220.00,
-    'EVT-014': 300.00,
-    'EVT-015': 1100.00,
+    'EVT-002': 1450.00,
+    'EVT-003': 420.00,
+    'EVT-004': 360.00,
+    'EVT-005': 390.00,
+    'EVT-006': 260.00,
+    'EVT-007': 520.00,
+    'EVT-008': 780.00,
+    'EVT-009': 460.00,
+    'EVT-010': 18.00,
+    'EVT-011': 180.00,
+    'EVT-012': 220.00,
+    'EVT-013': 300.00,
+    'EVT-014': 1100.00,
   };
 
   @override
@@ -1102,6 +1120,15 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
         curve: Curves.easeOutBack,
       ),
     );
+
+    productosEventos = List<Map<String, dynamic>>.from(productosEventosBase);
+
+    if (widget.firebaseDisponible) {
+      obtenerProductosEventos();
+    } else {
+      cargando = false;
+      mensajeError = 'Firebase no esta configurado. Se muestran datos locales.';
+    }
   }
 
   @override
@@ -1126,16 +1153,101 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
     }).toList();
   }
 
+  Future<void> obtenerProductosEventos() async {
+    setState(() {
+      cargando = true;
+      mensajeError = null;
+    });
+
+    try {
+      final snapshot =
+          await FirebaseFirestore.instance
+              .collection('productos_eventos')
+              .orderBy('codigo')
+              .get();
+
+      if (snapshot.docs.isEmpty) {
+        setState(() {
+          productosEventos = List<Map<String, dynamic>>.from(
+            productosEventosBase,
+          );
+          cargando = false;
+          mensajeError =
+              'Aun no hay productos para eventos en Firebase. Se muestran datos locales.';
+        });
+        return;
+      }
+
+      setState(() {
+        productosEventos =
+            snapshot.docs.map((doc) => {'id': doc.id, ...doc.data()}).toList();
+        cargando = false;
+      });
+    } catch (e) {
+      setState(() {
+        productosEventos = List<Map<String, dynamic>>.from(
+          productosEventosBase,
+        );
+        cargando = false;
+        mensajeError =
+            'No se pudo cargar productos para eventos. Se muestran datos locales.';
+      });
+    }
+  }
+
   int get totalProductosCarrito {
     return carrito.values.fold(0, (total, cantidad) => total + cantidad);
   }
 
   double obtenerPrecioProducto(String codigo) {
+    Object? precio;
+
+    for (final producto in productosEventos) {
+      if (producto['codigo']?.toString() == codigo) {
+        precio = producto['precio'];
+        break;
+      }
+    }
+
+    if (precio is num) {
+      return precio.toDouble();
+    }
+
+    if (precio is String) {
+      return double.tryParse(precio) ?? 0;
+    }
+
     return preciosEventos[codigo] ?? 0;
   }
 
   String obtenerImagenProducto(String codigo, String urlImagen) {
-    return urlImagen;
+    final url = urlImagen.trim();
+
+    if (url.isEmpty) {
+      return '';
+    }
+
+    final uri = Uri.tryParse(url);
+
+    if (uri == null || !uri.host.contains('drive.google.com')) {
+      return url;
+    }
+
+    final idPorQuery = uri.queryParameters['id'];
+
+    if (idPorQuery != null && idPorQuery.isNotEmpty) {
+      return 'https://drive.google.com/thumbnail?id=$idPorQuery&sz=w1000';
+    }
+
+    final segmentos = uri.pathSegments;
+    final indiceFile = segmentos.indexOf('d');
+
+    if (indiceFile >= 0 && indiceFile + 1 < segmentos.length) {
+      final idArchivo = segmentos[indiceFile + 1];
+      return 'https://drive.google.com/thumbnail?id=$idArchivo&sz=w1000';
+    }
+
+    return url;
   }
 
   String formatearPrecio(double precio) {
@@ -1183,7 +1295,12 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
   }
 
   void actualizarProductosEventos() {
-    setState(() {});
+    if (widget.firebaseDisponible) {
+      obtenerProductosEventos();
+    } else {
+      setState(() {});
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Productos para eventos actualizados'),
@@ -1269,18 +1386,44 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
     return Colors.deepOrange;
   }
 
-  Widget construirImagen(String categoria) {
+  Widget construirImagen(String categoria, String urlImagen) {
     final color = obtenerColorEvento(categoria);
 
     return Container(
       width: 86,
       height: 86,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.13),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: color.withValues(alpha: 0.35)),
       ),
-      child: Icon(obtenerIconoEvento(categoria), color: color, size: 32),
+      child:
+          urlImagen.isEmpty
+              ? Icon(obtenerIconoEvento(categoria), color: color, size: 32)
+              : Image.network(
+                urlImagen,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    obtenerIconoEvento(categoria),
+                    color: color,
+                    size: 32,
+                  );
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+
+                  return Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: color,
+                    ),
+                  );
+                },
+              ),
     );
   }
 
@@ -1289,7 +1432,12 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
     final nombre = producto['producto']?.toString() ?? 'Sin nombre';
     final categoria = producto['categoria']?.toString() ?? 'Sin categoria';
     final descripcion = producto['descripcion']?.toString() ?? '';
-    final unidad = producto['unidad']?.toString() ?? '';
+    final tipo =
+        producto['tipo']?.toString() ?? producto['unidad']?.toString() ?? '';
+    final imagen = obtenerImagenProducto(
+      codigo,
+      producto['imagen']?.toString() ?? '',
+    );
     final precio = obtenerPrecioProducto(codigo);
     final cantidadCarrito = carrito[codigo] ?? 0;
     final colorCategoria = obtenerColorEvento(categoria);
@@ -1307,7 +1455,7 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            construirImagen(categoria),
+            construirImagen(categoria, imagen),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -1335,7 +1483,7 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
                     children: [
                       Expanded(
                         child: Text(
-                          'Unidad: $unidad',
+                          'Tipo: $tipo',
                           style: TextStyle(color: Colors.grey.shade700),
                         ),
                       ),
@@ -1432,6 +1580,23 @@ class _ProductosEventosScreenState extends State<ProductosEventosScreen>
             ),
           ),
         ),
+        if (cargando)
+          const Padding(
+            padding: EdgeInsets.only(top: 22),
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        if (mensajeError != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(18, 10, 18, 4),
+            child: Text(
+              mensajeError!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.deepOrange.shade700,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
         if (productos.isEmpty)
           const Padding(
             padding: EdgeInsets.only(top: 80),
@@ -1536,19 +1701,110 @@ class _CarritoProductosScreenState extends State<CarritoProductosScreen> {
     showDialog<void>(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          content: const Text(
-            'Compra realizada con éxito',
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          actionsAlignment: MainAxisAlignment.center,
-          actions: [
-            FilledButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Aceptar'),
+        return TweenAnimationBuilder<double>(
+          tween: Tween(begin: 0.82, end: 1),
+          duration: const Duration(milliseconds: 260),
+          curve: Curves.easeOutBack,
+          builder: (context, escala, child) {
+            return Transform.scale(scale: escala, child: child);
+          },
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18),
             ),
-          ],
+            contentPadding: const EdgeInsets.fromLTRB(24, 26, 24, 18),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TweenAnimationBuilder<double>(
+                  tween: Tween(begin: 0, end: 1),
+                  duration: const Duration(milliseconds: 560),
+                  curve: Curves.elasticOut,
+                  builder: (context, valor, child) {
+                    final opacidad = valor.clamp(0.0, 1.0);
+
+                    return Opacity(
+                      opacity: opacidad,
+                      child: Transform.scale(scale: valor, child: child),
+                    );
+                  },
+                  child: Container(
+                    width: 76,
+                    height: 76,
+                    decoration: BoxDecoration(
+                      color: Colors.green.withValues(alpha: 0.12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.check_circle,
+                      color: Colors.green,
+                      size: 54,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                const Text(
+                  'Compra realizada',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Pedido registrado con exito',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey.shade700, fontSize: 14),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 12,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.deepOrange.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.deepOrange.withValues(alpha: 0.22),
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: Text(
+                          'Total pagado',
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Text(
+                        widget.formatearPrecio(totalPagar),
+                        style: const TextStyle(
+                          color: Colors.deepOrange,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            actionsAlignment: MainAxisAlignment.center,
+            actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            actions: [
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.done),
+                  label: const Text('Aceptar'),
+                  style: FilledButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -1604,16 +1860,42 @@ class _CarritoProductosScreenState extends State<CarritoProductosScreen> {
     return Icons.inventory_2;
   }
 
-  Widget construirImagen(String categoria) {
+  Widget construirImagen(String categoria, String urlImagen) {
     return Container(
       width: 58,
       height: 58,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Colors.deepOrange.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.deepOrange.withValues(alpha: 0.25)),
       ),
-      child: Icon(obtenerIconoCarrito(categoria), color: Colors.deepOrange),
+      child:
+          urlImagen.isEmpty
+              ? Icon(obtenerIconoCarrito(categoria), color: Colors.deepOrange)
+              : Image.network(
+                urlImagen,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    obtenerIconoCarrito(categoria),
+                    color: Colors.deepOrange,
+                  );
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+
+                  return const Center(
+                    child: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
+                  );
+                },
+              ),
     );
   }
 
@@ -1621,6 +1903,10 @@ class _CarritoProductosScreenState extends State<CarritoProductosScreen> {
     final codigo = producto['codigo']?.toString() ?? '';
     final nombre = producto['producto']?.toString() ?? 'Sin nombre';
     final categoria = producto['categoria']?.toString() ?? 'Sin categoria';
+    final imagen = widget.obtenerImagenProducto(
+      codigo,
+      producto['imagen']?.toString() ?? '',
+    );
     final cantidad = widget.carrito[codigo] ?? 0;
     final precio = widget.obtenerPrecioProducto(codigo);
     final subtotal = precio * cantidad;
@@ -1633,7 +1919,7 @@ class _CarritoProductosScreenState extends State<CarritoProductosScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            construirImagen(categoria),
+            construirImagen(categoria, imagen),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

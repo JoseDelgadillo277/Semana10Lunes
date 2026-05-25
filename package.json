@@ -9,6 +9,7 @@
   },
   "scripts": {
     "importar:productos": "node scripts/importar_productos.js",
+    "importar:eventos": "node scripts/importar_eventos.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

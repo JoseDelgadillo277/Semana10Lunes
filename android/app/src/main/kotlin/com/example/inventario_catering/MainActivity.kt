@@ -21,16 +21,24 @@ class MainActivity : FlutterActivity() {
     private val channelName = "inventario_catering/delivery"
     private val locationRequestCode = 44
     private var pendingResult: MethodChannel.Result? = null
+    private var pendingAction: String = "map"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channelName).setMethodCallHandler { call, result ->
-            if (call.method == "openDeliveryMap") {
-                pendingResult = result
-                abrirDeliveryConPermiso()
-            } else {
-                result.notImplemented()
+            when (call.method) {
+                "openDeliveryMap" -> {
+                    pendingResult = result
+                    pendingAction = "map"
+                    abrirDeliveryConPermiso()
+                }
+                "getCurrentLocation" -> {
+                    pendingResult = result
+                    pendingAction = "location"
+                    obtenerUbicacionConPermiso()
+                }
+                else -> result.notImplemented()
             }
         }
     }
@@ -38,6 +46,22 @@ class MainActivity : FlutterActivity() {
     private fun abrirDeliveryConPermiso() {
         if (tienePermisoUbicacion()) {
             obtenerUbicacionActualYAbrirMaps()
+            return
+        }
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ),
+            locationRequestCode
+        )
+    }
+
+    private fun obtenerUbicacionConPermiso() {
+        if (tienePermisoUbicacion()) {
+            obtenerUbicacionActualYResponder()
             return
         }
 
@@ -74,11 +98,89 @@ class MainActivity : FlutterActivity() {
         }
 
         if (grantResults.any { it == PackageManager.PERMISSION_GRANTED }) {
-            obtenerUbicacionActualYAbrirMaps()
+            if (pendingAction == "location") {
+                obtenerUbicacionActualYResponder()
+            } else {
+                obtenerUbicacionActualYAbrirMaps()
+            }
         } else {
             pendingResult?.error("PERMISSION_DENIED", "Permiso de ubicacion denegado", null)
             pendingResult = null
         }
+    }
+
+    private fun obtenerUbicacionActualYResponder() {
+        if (!tienePermisoUbicacion()) {
+            pendingResult?.error("PERMISSION_DENIED", "Permiso de ubicacion denegado", null)
+            pendingResult = null
+            return
+        }
+
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val providers = listOf(
+            LocationManager.GPS_PROVIDER,
+            LocationManager.NETWORK_PROVIDER,
+            LocationManager.PASSIVE_PROVIDER
+        ).filter { locationManager.isProviderEnabled(it) }
+
+        val ultimaUbicacion = obtenerUltimaUbicacionReciente(locationManager)
+        if (ultimaUbicacion != null) {
+            responderUbicacion(ultimaUbicacion)
+            return
+        }
+
+        if (providers.isEmpty()) {
+            responderUbicacion(null)
+            return
+        }
+
+        val handler = Handler(Looper.getMainLooper())
+        var completado = false
+
+        val listener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                if (completado) return
+                completado = true
+                handler.removeCallbacksAndMessages(null)
+                locationManager.removeUpdates(this)
+                responderUbicacion(location)
+            }
+
+            override fun onProviderDisabled(provider: String) {}
+            override fun onProviderEnabled(provider: String) {}
+            @Deprecated("Deprecated in Android")
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+        }
+
+        try {
+            providers.forEach { provider ->
+                locationManager.requestLocationUpdates(provider, 0L, 0f, listener, Looper.getMainLooper())
+            }
+            handler.postDelayed({
+                if (!completado) {
+                    completado = true
+                    locationManager.removeUpdates(listener)
+                    responderUbicacion(obtenerUltimaUbicacionReciente(locationManager))
+                }
+            }, 5000)
+        } catch (_: SecurityException) {
+            pendingResult?.error("PERMISSION_DENIED", "Permiso de ubicacion denegado", null)
+            pendingResult = null
+        }
+    }
+
+    private fun responderUbicacion(location: Location?) {
+        if (location == null) {
+            pendingResult?.success(null)
+        } else {
+            pendingResult?.success(
+                mapOf(
+                    "latitude" to location.latitude,
+                    "longitude" to location.longitude
+                )
+            )
+        }
+        pendingResult = null
     }
 
     private fun obtenerUbicacionActualYAbrirMaps() {
